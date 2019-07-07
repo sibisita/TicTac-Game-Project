@@ -100,10 +100,11 @@ def print_board(Xs,Ys):
 			print ('coming soon')
 
 def getinput(Xs,Ys):
-	x=input('Move position =')
-	#print(type(x))
-	x=int(x)
-	#print(type(x))
+	try:
+		x=int(input('Move position ='))
+	except ValueError:
+		print('*****Error:Please input a Number.*****')
+		x=getinput(Xs,Ys)
 	if x in Xs or x in Ys:
 		print('Value used.Try again.')
 		x=getinput(Xs,Ys) 
