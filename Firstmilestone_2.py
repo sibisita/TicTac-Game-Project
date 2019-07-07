@@ -1,3 +1,5 @@
+import os
+
 def blankline():
 	print('\t\t\t|\t\t\t|')
 def underline():
@@ -8,12 +10,20 @@ def validate(Xs,Ys):
 		if a in Xs and b in Xs and c in Xs:
 
 			print("*"*100,"\n"*3,"X wins\t"*3)
-			exit()
+			if (replay()):
+				main_logic()
+			else:
+				exit()
 		elif a in Ys and b in Ys and c in Ys:
 			print("*"*100,"\n"*3,"Y wins\t"*3)
-			exit()
+			if (replay()):
+				main_logic()
+			else:
+				exit()
+
 		
 def print_board(Xs,Ys):
+	os.system('cls')
 	for i in range(11):
 		if i in [0,2,4,6,8,10]:
 			blankline()
@@ -101,27 +111,35 @@ def getinput(Xs,Ys):
 		print("Invalid. Use between 1-9.Try again.")
 		x=getinput(Xs,Ys)
 	return x
-Xs= []
-Ys= []
 
-move=0
-print_board(Xs,Ys)
-while move in range(9) :#Moves from 1 to 9
-	print('Move =',move +1)
-	if move%2==0:
-		Xs.append(getinput(Xs,Ys))
-		print_board(Xs,Ys)
-		validate(Xs,Ys)
-	else:
-		Ys.append(getinput(Xs,Ys))
-		print_board(Xs,Ys)
-		validate(Xs,Ys)
-	print ('X',Xs,"\nY",Ys)
+def main_logic():
+	Xs= []
+	Ys= []
 
-	move+=1
+	move=0
+	print_board(Xs,Ys)
+	while move in range(9) :#Moves from 1 to 9
+		print('Move =',move +1)
+		if move%2==0:
+			print('\t\t\tX to move')
+			Xs.append(getinput(Xs,Ys))
+			print_board(Xs,Ys)
+			validate(Xs,Ys)
+		else:
+			print('\t\t\tY to move')
+			Ys.append(getinput(Xs,Ys))
+			print_board(Xs,Ys)
+			validate(Xs,Ys)
+		print ('X',Xs,"\nY",Ys)
+
+		move+=1
 
 
 
-print_board(Xs,Ys)
-if move>=9:
-	print("Draw\t"*3)
+	print_board(Xs,Ys)
+	if move>=9:
+		print("Draw\t"*3)
+def replay() :		
+	choise = input('Do you want to play again: (Y/N)').upper()
+	return choise == 'Y'
+main_logic()
